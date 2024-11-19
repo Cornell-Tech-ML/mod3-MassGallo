@@ -12,6 +12,7 @@ from .tensor_data import (
     broadcast_index,
     index_to_position,
     shape_broadcast,
+    to_index,
 )
 
 if TYPE_CHECKING:
@@ -276,21 +277,14 @@ def tensor_map(
         in_index = np.zeros(len(in_shape), dtype=np.int32)
 
         for i in range(len(out)):
-            # Handle broadcasting: map out_index to in_index
+            to_index(i, out_shape, out_index)
+
             broadcast_index(out_index, out_shape, in_shape, in_index)
 
-            # Convert in_index to a single position in in_storage
-            in_position = index_to_position(in_index, in_strides)
+            o = index_to_position(out_index, out_strides)
+            j = index_to_position(in_index, in_strides)
 
-            # Apply the function and store the result in the output storage
-            out[i] = fn(in_storage[in_position])
-
-            # Update the out_index for the next position
-            for j in reversed(range(len(out_shape))):
-                out_index[j] += 1
-                if out_index[j] < out_shape[j]:
-                    break
-                out_index[j] = 0
+            out[o] = fn(in_storage[j])
 
     return _map
 

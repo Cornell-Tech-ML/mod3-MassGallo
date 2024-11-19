@@ -48,7 +48,10 @@ def index_to_position(index: Index, strides: Strides) -> int:
         Position in storage
 
     """
-    return sum(i * s for i, s in zip(index, strides))
+    pos = 0
+    for ind, stride in zip(index, strides):
+        pos += ind * stride
+    return pos
 
 
 def to_index(ordinal: int, shape: Shape, out_index: OutIndex) -> None:
@@ -64,12 +67,11 @@ def to_index(ordinal: int, shape: Shape, out_index: OutIndex) -> None:
         out_index : return index corresponding to position.
 
     """
-    strides = strides_from_shape(tuple(shape))
-    index = []
-    for stride in strides:
-        index.append(ordinal // stride)
-        ordinal = ordinal % stride
-    out_index[:] = index
+    cur_ord = ordinal + 0
+    for i in range(len(shape) - 1, -1, -1):
+        out_index[i] = int(cur_ord % shape[i])
+        cur_ord = cur_ord // shape[i]
+    return None
 
 
 def broadcast_index(
@@ -93,23 +95,12 @@ def broadcast_index(
         None
 
     """
-    # Calculate the number of extra leading dimensions
-    extra_dims = len(big_shape) - len(shape)
-
-    # Slice the big_index to align with the shape
-    if extra_dims > 0:
-        trimmed_big_index = big_index[extra_dims:]
-    else:
-        trimmed_big_index = big_index
-
-    # Map each dimension according to broadcasting rules
-    for i in range(len(shape)):
-        if shape[i] == 1:
-            # If the dimension in the smaller shape is 1, broadcast by setting index to 0
-            out_index[i] = 0
+    for i, s in enumerate(shape):
+        if s > 1:
+            out_index[i] = big_index[i + len(big_shape) - len(shape)]
         else:
-            # Otherwise, copy the corresponding index from the trimmed big_index
-            out_index[i] = trimmed_big_index[i]
+            out_index[i] = 0
+    return None
 
 
 def shape_broadcast(shape1: UserShape, shape2: UserShape) -> UserShape:
@@ -134,7 +125,7 @@ def shape_broadcast(shape1: UserShape, shape2: UserShape) -> UserShape:
         if dim1 != dim2 and dim1 != 1 and dim2 != 1:
             raise IndexingError(f"Cannot broadcast shapes {shape1} and {shape2}")
 
-    return tuple(max(s1[i], s2[i]) for i in range(max_len))
+    return tuple([max(s1[i], s2[i]) for i in range(max_len)])
 
 
 def strides_from_shape(shape: UserShape) -> UserStrides:
