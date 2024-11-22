@@ -1,5 +1,17 @@
 # MiniTorch Module 3
 
+Table of Contents:
+- Task 3.1/3.2 Parallel Report
+- Task 3.4 Graph
+- Task 3.5 HIDDEN = 100
+  - Simple
+  - Split
+  - XOR
+- Task 3.5 HIDDEN = 500
+  - Simple
+  - Split
+  - XOR
+
 ## Task 3.1/3.2 Parallel Report
 ```text
 MAP
