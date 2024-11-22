@@ -1,6 +1,7 @@
 # MiniTorch Module 3
 
 ## Task 3.1/3.2 Parallel Report
+```text
 MAP
 
 ================================================================================
@@ -306,11 +307,19 @@ Parallel structure is already optimal.
 Allocation hoisting:
 No allocation hoisting found
 None
+```
 
 
 ## Task 3.4
 
-## Task 3.5 CPU
+CPU vs GPU graph using project/timing.py
+
+![Matrix Multiplication Timings for Different Backends](https://github.com/user-attachments/assets/2b147307-054f-43ab-9aa2-a5bc669b0152)
+
+
+## Task 3.5
+These are CPU backend since it is much faster than the 2-3 seconds GPU.
+
 
 ### Simple
 
