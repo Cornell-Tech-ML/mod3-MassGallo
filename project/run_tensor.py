@@ -6,6 +6,8 @@ Disclaimer: AI Claude 3.5 Sonnet (Cursor on Mac) was used to help write comments
 
 
 import minitorch
+import numpy as np
+import time
 
 # Use this function to make a random parameter in
 # your module.
@@ -60,7 +62,7 @@ class TensorTrain:
         return self.model.forward(minitorch.tensor(X))
 
     def train(self, data, learning_rate: float, max_epochs: int = 500,
-             log_fn = lambda epoch, loss, correct, _: print(f"Epoch {epoch}, loss {loss}, correct {correct}")):
+             log_fn = lambda epoch, loss, correct, _, time_per_epoch: print(f"Epoch {epoch}, loss {loss}, correct {correct}, time per epoch {time_per_epoch}")):
         """Train the model using binary cross entropy loss."""
         # Initialize model and optimizer
         self.model = Network(self.hidden_layers)
@@ -71,8 +73,10 @@ class TensorTrain:
         y = minitorch.tensor(data.y)
 
         losses = []
+        times = []
         for epoch in range(1, max_epochs + 1):
             # Forward pass
+            start_time = time.time()
             optim.zero_grad()
             out = self.model.forward(X).view(data.N)
 
@@ -92,15 +96,17 @@ class TensorTrain:
 
             correct = int(((out.detach() > 0.5) == y).sum()[0])
 
+            times.append(time.time() - start_time)
+
             # Log progress
             if epoch % 10 == 0 or epoch == max_epochs:
 
-                log_fn(epoch, total_loss, correct, losses)
+                log_fn(epoch, total_loss, correct, losses, np.mean(times[-10:]))
 
 
 if __name__ == "__main__":
     PTS = 50
-    HIDDEN = 2
-    RATE = 0.5
+    HIDDEN = 100
+    RATE = 0.05
     data = minitorch.datasets["Simple"](PTS)
     TensorTrain(HIDDEN).train(data, RATE)
