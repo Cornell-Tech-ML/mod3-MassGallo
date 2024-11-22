@@ -326,7 +326,7 @@ These are CPU backend since it is much faster than the 2-3 seconds GPU.
 ```bash
 python run_fast_tensor.py --BACKEND cpu --HIDDEN 100 --DATASET simple --RATE 0.05
 ```
-
+```text
 Epoch  0 | loss  6.896620141381159 | correct  34 | time per epoch  8.926475048065186
 Epoch  10 | loss  1.2352652908907127 | correct  47 | time per epoch  0.27253587245941163
 Epoch  20 | loss  0.7240385485856753 | correct  50 | time per epoch  0.27005677223205565
@@ -377,13 +377,13 @@ Epoch  460 | loss  0.2972794695573593 | correct  50 | time per epoch  0.27172789
 Epoch  470 | loss  0.08894245624694344 | correct  50 | time per epoch  0.2724871873855591
 Epoch  480 | loss  0.0011009970888083477 | correct  50 | time per epoch  0.27035510540008545
 Epoch  490 | loss  0.31282253726431997 | correct  50 | time per epoch  0.2701268196105957
-
+```
 ### Split
 
 ```bash
 python run_fast_tensor.py --BACKEND cpu --HIDDEN 100 --DATASET split --RATE 0.05
 ```
-
+```text
 Epoch  0 | loss  5.354309669113101 | correct  32 | time per epoch  9.490080118179321
 Epoch  10 | loss  6.164097503446535 | correct  32 | time per epoch  0.2869336843490601
 Epoch  20 | loss  5.0022280842027955 | correct  32 | time per epoch  0.28210608959197997
@@ -434,14 +434,14 @@ Epoch  460 | loss  0.8627176759747535 | correct  48 | time per epoch  0.26789135
 Epoch  470 | loss  0.8281149214394261 | correct  50 | time per epoch  0.29334986209869385
 Epoch  480 | loss  0.08054717083436663 | correct  50 | time per epoch  0.2688873767852783
 Epoch  490 | loss  0.08029101554654741 | correct  50 | time per epoch  0.26792731285095217
-
+```
 
 ### XOR
 
 ```bash
 python run_fast_tensor.py --BACKEND cpu --HIDDEN 100 --DATASET xor --RATE 0.02
 ```
-
+```text
 Epoch  0 | loss  8.880384990268741 | correct  21 | time per epoch  8.930634021759033
 Epoch  10 | loss  6.124100228451202 | correct  33 | time per epoch  0.2690741539001465
 Epoch  20 | loss  3.965378342305107 | correct  46 | time per epoch  0.2730401992797852
@@ -492,24 +492,5 @@ Epoch  460 | loss  0.5132635190405218 | correct  50 | time per epoch  0.26770565
 Epoch  470 | loss  0.44545981821648784 | correct  50 | time per epoch  0.2693261861801147
 Epoch  480 | loss  1.0161866392770806 | correct  50 | time per epoch  0.2690627336502075
 Epoch  490 | loss  0.8852174426171046 | correct  50 | time per epoch  0.26822035312652587
-
-
-## Task 3.5 CPU
-
-### Simple
-
-```bash
-python run_fast_tensor.py --BACKEND gpu --HIDDEN 100 --DATASET simple --RATE 0.05
 ```
 
-### Split
-
-```bash
-python run_fast_tensor.py --BACKEND gpu --HIDDEN 100 --DATASET split --RATE 0.05
-```
-
-### XOR
-
-```bash
-python run_fast_tensor.py --BACKEND gpu --HIDDEN 100 --DATASET xor --RATE 0.02
-```
